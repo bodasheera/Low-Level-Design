@@ -31,10 +31,10 @@ class Product:
         self.price = price
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"{self.name} - ${self.price}"
 
 
-class ShoppingCart():
+class ShoppingCart:
 
     def __init__(self):
         self._products:Product = []
@@ -43,10 +43,6 @@ class ShoppingCart():
     def products(self):
         return self._products
     
-    @products.setter
-    def products(self, product):
-        self._products.append(product)
-
     def add_products(self, product):
         self._products.append(product)
 
@@ -54,14 +50,28 @@ class ShoppingCart():
         total = 0
 
         for product in self.products:
-            total += product.name 
+            total += product.price 
+
+        return total
 
     # voilates SRP
     def print_invoice(self):
+        print("Invoice")
         for product in self.products:
             print(product)
-        print(self.calculate_total())
+        print(f"Total : ${self.calculate_total()}")
 
     # voilates SRP
     def save_to_db(self):
         print("Saving shopping cart to DB")
+
+
+p1 = Product('Laptop', 50000)
+p2 = Product('Mouse', 500)
+
+c = ShoppingCart()
+c.add_products(p1)
+c.add_products(p2)
+
+c.print_invoice()
+c.save_to_db()
